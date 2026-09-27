@@ -1,0 +1,28 @@
+plugins { id 'net.fabricmc.fabric-loom' version '1.17.21' }
+version = '0.1.0-alpha.1'
+group = 'dev.p2p'
+base.archivesName = 'P2P_Security-26.3'
+repositories { mavenCentral() }
+dependencies {
+    minecraft 'com.mojang:minecraft:26.3'
+    implementation 'net.fabricmc:fabric-loader:0.19.5'
+    implementation 'net.fabricmc.fabric-api:fabric-api:0.160.5+26.3'
+    if (project.hasProperty('instantP2pJar')) runtimeOnly files(project.property('instantP2pJar'))
+    testImplementation platform('org.junit:junit-bom:5.13.4')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+java { toolchain.languageVersion = JavaLanguageVersion.of(25); withSourcesJar() }
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') { expand version: project.version }
+}
+test { useJUnitPlatform() }
+fabricApi.configureTests {
+    createSourceSet = true
+    modId = 'p2p_security_test'
+    enableClientGameTests = true
+    enableGameTests = false
+    eula = false
+}

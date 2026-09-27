@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "p2p_security",
+  "version": "${version}",
+  "name": "P2P_Security",
+  "description": "Experimental host-managed audit, rollback and permissions for integrated servers.",
+  "environment": "*",
+  "entrypoints": {"main": ["dev.p2p.security.P2PSecurity"]},
+  "mixins": ["p2p_security.mixins.json"],
+  "depends": {"fabricloader": ">=0.19.5", "minecraft": "26.3", "java": ">=25", "fabric-api": "*"}
+}
